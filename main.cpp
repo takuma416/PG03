@@ -1,14 +1,18 @@
-#include<stdio.h>
+#include <stdio.h>
+
 template<typename Type>
+
 Type Min(Type a, Type b) {
-	return static_cast<Type>(a + b);
+	if (a > b) {
+		return static_cast<Type>(b);
+	}
+	else {
+		return static_cast<Type>(a);
+	}
 }
 
 int main() {
-	printf("%d\n", Min<int>(114, 514));
-	printf("%f\n", Min<float>(1.14f, 5.14f));
-	printf("%lf\n", Min<double>(1.14, 5.14));
-	printf("”šˆÈŠO‚Í‘ã“ü‚Å‚«‚Ü‚¹‚ñ\n", Min<char>);
-
-	return 0;
+	printf("%d\n", Min<int>(1, 2));
+	printf("%f\n", Min<float>(1.0f, 2.0f));
+	printf("%lf\n", Min<double>(3.14159265, 2.7182818281));
 }

@@ -1,18 +1,21 @@
 #include <stdio.h>
 
-template<typename Type>
+int Recursivel(int kyuuryou, int zikan, int kotei) {
+	if (kyuuryou >= kotei) {
+		printf("%dŠÔŒã‚É’´‚¦‚é", zikan);
+		return zikan;
+	}
+	printf("%d %d\n", kyuuryou, kotei);
+	kyuuryou = kyuuryou * 2 - 50;
 
-Type Min(Type a, Type b) {
-	if (a > b) {
-		return static_cast<Type>(b);
-	}
-	else {
-		return static_cast<Type>(a);
-	}
+	return(Recursivel(kyuuryou, ++zikan, kotei=1072));
 }
 
 int main() {
-	printf("%d\n", Min<int>(1, 2));
-	printf("%f\n", Min<float>(1.0f, 2.0f));
-	printf("%lf\n", Min<double>(3.14159265, 2.7182818281));
+	int saiki = 100;
+	int ippan = 1072;
+	int zikan = 0;
+	int result1 = Recursivel(saiki, zikan, ippan);;
+
+	return 0;
 }

@@ -1,64 +1,59 @@
 #include <stdio.h>
-#include <windows.h>
+#include <Windows.h>
 #include <time.h>
-
-typedef void(* PFunc)(int*, int*);
+#include <functional>
 
 // コールバック関数
-void DispResult(int* s, int* kazu) {
+void DispResult(int* s, int* kye) {
+    int dice = rand() % 2;
 
-	int kekka = rand() % 2;
-
-	if (kekka == *kazu) {
-		if (kekka == 0)
-			printf("%dで丁（偶数）でした!大当たり!!\n", kekka);
-		else
-			printf("%dで半（奇数）でした!大当たり!!\n", kekka);
-	}
-	else {
-		if (kekka == 0)
-			printf("%dで丁（偶数）でした!残念!!\n", kekka);
-		else
-			printf("%dで半（奇数）でした!残念!!\n", kekka);
-	}
-
+    if (dice == *kye) {
+        if (dice == 0)
+            printf("%dで丁(偶数)でした。当たり\n", dice);
+        else
+            printf("%dで半(奇数)でした。当たり\n", dice);
+    }
+    else {
+        if (dice == 1)
+            printf("%dで半(奇数)でした。はずれ\n", dice);
+        else
+            printf("%dで丁(偶数)でした。はずれ\n", dice);
+    }
 }
 
-// コールバック関数を呼び出す
-void setTimeout(PFunc p, int second, int kazu) {
+// 指定秒数待ってからコールバック関数を実行
+void setTimeout(std::function<void(int*, int*)> p, int second, int kye) {
+    for (int i = 0; i < second; i++) {
+        Sleep(1000);
+        printf("%d...\n", second - i);
+    }
 
-	puts("さて結果は…\n");
-
-	for (int i = 0; i < second; i++) {
-		Sleep(1000);
-		printf("%d...\n", second - i);
-	}
-
-	p(&second, &kazu);
+    p(&second, &kye);
 }
-
 
 int main() {
+    int kye;
 
-	int kazu;
+    srand(static_cast<unsigned int>(time(NULL)));
+    printf("丁(偶数)なら0、半(奇数)なら1を打つ\n");
+    scanf_s("%d", &kye);
 
-	srand(static_cast<unsigned int>(time(NULL)));
+    if (kye == 0) {
+        puts("あなたは丁(偶数)を選びました");
+    }
+    else {
+        puts("あなたは半(奇数)を選びました");
+    }
 
-	printf("丁（偶数）ならゼロ、半（奇数）なら1を入力してください\n");
-	scanf_s("%d", &kazu);
+    // 関数オブジェクトを作成
+    std::function<void(int*, int*)> p = [](int* s, int* kye) {
+        DispResult(s, kye);
+        };
 
-	if (kazu == 0) {
-		puts("あなたは丁（偶数）を選びましたね？");
-	}
-	else {
-		puts("あなたは半（奇数）を選びましたね？");
-	}
+    setTimeout(p, 3, kye);
 
-	PFunc p;
-	p = DispResult;
-	setTimeout(p, 3, kazu);
-
-	return 0;
+    return 0;
 }
+
 
 

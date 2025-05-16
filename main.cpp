@@ -2,7 +2,7 @@
 #include <windows.h>
 #include <time.h>
 
-typedef void(* pfunc)(int*, int*);
+typedef void(* PFunc)(int*, int*);
 
 // コールバック関数
 void DispResult(int* s, int* kazu) {
@@ -25,7 +25,7 @@ void DispResult(int* s, int* kazu) {
 }
 
 // コールバック関数を呼び出す
-void setTimeout(pfunc p, int second, int kazu) {
+void setTimeout(PFunc p, int second, int kazu) {
 
 	puts("さて結果は…\n");
 
@@ -54,7 +54,7 @@ int main() {
 		puts("あなたは半（奇数）を選びましたね？");
 	}
 
-	pfunc p;
+	PFunc p;
 	p = DispResult;
 	setTimeout(p, 3, kazu);
 

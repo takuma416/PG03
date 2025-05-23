@@ -1,42 +1,36 @@
-#include <iostream>
+#include <cstdio>
+using namespace std;
 
-//クラステンプレート
-template <typename Type, typename Type2>
-class TemplateClass {
+class Animal {
 public:
-    // コンストラクタ
-    TemplateClass(Type number1, Type2 number2) :
-        Number1(number1), Number2(number2) {
-    }
+    virtual void sound() const = 0;
+};
 
-    Type Min()
-    {
-        if (Number1 < Number2)
-            return static_cast<Type>(Number1);
-        else
-            return static_cast<Type>(Number2);
-    }
 
-private:
-    Type Number1;
-    Type2 Number2;
+class Dog : public Animal {
+public:
+    void sound() const override {
+        printf("イヌ鳴き声：ワン\n");
+    }
+};
+
+
+class Cat : public Animal {
+public:
+    void sound() const override {
+        printf("ネコ鳴き声:ニャー\n");
+    }
 };
 
 int main() {
+    Animal* animal1 = new Dog();
+    Animal* animal2 = new Cat();
 
-    TemplateClass<int, float> intFloatTemplate(100, 50.0f);
-    TemplateClass<int, double> intDoubleTemplate(80, 20.0);
-    TemplateClass<float, int> floatIntTemplate(2.0f, 18);
-    TemplateClass<float, double> floatDoubleTemplate(11.0f, 3.5);
-    TemplateClass<double, int> doubleIntTemplate(234.0, 123);
-    TemplateClass<double, float> doubleFloatTemplate(400.1, 500.2f);
+    animal1->sound();
+    animal2->sound();
 
-    std::cout << intFloatTemplate.Min() << std::endl;
-    std::cout << intDoubleTemplate.Min() << std::endl;
-    std::cout << floatIntTemplate.Min() << std::endl;
-    std::cout << floatDoubleTemplate.Min() << std::endl;
-    std::cout << doubleIntTemplate.Min() << std::endl;
-    std::cout << doubleFloatTemplate.Min() << std::endl;
+    delete animal1;
+    delete animal2;
 
-        return 0;
+    return 0;
 }
